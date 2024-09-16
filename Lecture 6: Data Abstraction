@@ -1,4 +1,8 @@
-#Qn13
+#Qn13  
+#Being the ingenious engineer you are, you quickly realize that encoding the weather information into binary numbers (0 and 1) and #transmitting them through electrical signals of 1s and 0s is a viable solution. You may assume there are only four types of weather: Sunny, #Rainy, Cloudy, and Snowy, each mapped to "00", "01", "10", and "11", respectively.
+#Now, let's implement a binary converter function, binary_encoder(string_weathers). string_weathers is a string containing a comma separated #sequence of weathers to be encoded, for example, "Sunny, Snowy, Rainy, Cloudy", which should then be encoded to "00110110".
+#A helper function find(string, char) is provided for you. find(string, char) will return the index of the FIRST occurence of the given char #in the string if the char is present in the given string, otherwise, it will return -1. 
+
 def binary_encoder(string_of_weathers):
     result = ""
     if string_of_weathers == "":
