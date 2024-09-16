@@ -1,1 +1,30 @@
-
+#Qn13
+def binary_encoder(string_of_weathers):
+    result = ""
+    if string_of_weathers == "":
+        return ""
+        
+    def weather(string):
+        if string == "Sunny":
+            return "00"
+        elif string == "Snowy":
+            return "11"
+        elif string == "Rainy":
+            return "01"
+        elif string == "Cloudy":
+            return "10"
+            
+    while True:
+        number = find(string_of_weathers, ",")
+        if number == -1:
+            subset = string_of_weathers.strip(" ")
+            code = weather(subset)
+            result += code
+            break
+        
+        subset = string_of_weathers[: number].strip(" ")
+        code = weather(subset)
+        result += code
+        string_of_weathers = string_of_weathers[number + 1:]
+        
+    return result
