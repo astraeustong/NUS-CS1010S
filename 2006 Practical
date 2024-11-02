@@ -1,0 +1,44 @@
+'''
+Tamagotchi
+A tamagotchi is a virtual pet. Write a class Tamagotchi that creates a Tamagotchi object with the specified name. You should decide what properties the Tamagotchi object should have in order to support the required behaviour as elaborated below. A Tamagotchi object, t has three methods:
+
+- teach where there can be a variable number of string inputs. This teaches the tamagotchi these words. Symbols will also work. If you try to teach a tamagotchi the same words more than once, it will ignore the later attempts.
+
+- play will make the tamagotchi return a stringified list of words that it has been taught (in sequential order).
+
+- kill will kill the tamagotchi. Once a tamagotchi is in heaven, it cannot be taught and will not respond when you try to play with it. Instead, all further method calls will return the string "<name> is dead" where <name> is the name of the tamagotchi.
+'''
+
+class Tamagotchi(object):
+    
+    def __init__(self,name):
+        self.name = name
+        self.list = []
+        self.dead = 0
+        
+    def teach(self,*args):
+        if self.dead == 1:
+            return f"{self.name} is dead" 
+            
+        for arg in args:
+            if arg in self.list:
+                continue
+            else:
+                self.list.append(arg)
+                
+    def kill(self):
+        if self.dead == 1:
+            return f"{self.name} is dead" 
+        self.dead = 1
+        return f"tamagotchi killed"
+        
+    def play(self):
+        if self.dead == 1:
+            return f"{self.name} is dead" 
+        output = f"{self.name} says"
+        for i in self.list:
+            output += " " + i + " and"
+        output = output[:-4]
+        return output
+
+ 
