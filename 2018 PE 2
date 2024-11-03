@@ -51,3 +51,76 @@ def num_cards(h):
             
     result = up + low_l[-1]
     return result
+
+
+
+'''
+Question 2
+'''
+import csv
+def read_csv(csvfilename):
+    """
+    Reads a csv file and returns a list of list
+    containing rows in the csv file and its entries.
+    """
+    rows = []
+
+    with open(csvfilename) as csvfile:
+        file_reader = csv.reader(csvfile)
+        for row in file_reader:
+            rows.append(row)
+    return rows
+    
+    
+def yearly_stats(fname, nric):
+    data = read_csv(fname)    
+    head = data[0]
+    ic = head.index('NRIC')
+    this = []
+    for item in data:
+        if item[ic] == nric:
+            this.append(item)
+    year_id = head.index('year')
+    tax_id = head.index('tax_paid')
+    small = min(list(map(lambda x:int(x[year_id]),this)))
+    latest = max(list(map(lambda x:int(x[year_id]),this)))
+    
+    taxes = list(map(lambda x:int(x[tax_id]),this))
+    small_tax = min(taxes)
+    large_tax = max(taxes)
+    def mean(l):
+        s = 0
+        for i in l:
+            s += i
+        return s / len(l)
+    m = round(mean(taxes),1)
+    
+    
+    return (small, latest, small_tax, large_tax, m)
+
+
+def effective_tax(fname):
+    data = read_csv(fname)
+    head = data[0]
+    year_id = head.index('year')
+    income_id = head.index('yearly_income')
+    tax_id = head.index('tax_paid')
+    house_id = head.index('house_rebate')
+    child_id = head.index('child_rebate')
+    education_id = head.index('education_rebate')
+
+    dic = {}
+    for i in data[1:]:
+        if str(i[year_id]) not in dic:
+            dic[str(i[year_id])] = []
+        else:
+            base = float(i[income_id]) - float(i[house_id]) - float(i[education_id]) - float(i[child_id])
+            up = float(i[tax_id])
+            ave = up / base * 100
+            dic[str(i[year_id])].append(ave)
+    output = {}
+    for item in dic:
+        lis = dic[item]
+        average = sum(lis) / len(lis)
+        output[item] = round(average,2)
+    return output
